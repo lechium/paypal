@@ -574,7 +574,7 @@ type (
 
 	// CapturedPurchaseUnit are purchase units for a captured order
 	CapturedPurchaseUnit struct {
-		ReferenceID string              `json:reference_id,omitempty"`
+		ReferenceID string              `json:"reference_id,omitempty"`
 		Amount      *PurchaseUnitAmount `json:"amount,omitempty"`
 		Payee       *Payee              `json:"payee,omitempty"`
 		Description string              `json:"description,omitempty"`
