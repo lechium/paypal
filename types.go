@@ -596,8 +596,8 @@ type (
 		Intent        string                 `json:"intent,omitempty"`
 		PurchaseUnits []CapturedPurchaseUnit `json:"purchase_units,omitempty"`
 		Payer         *PayerWithNameAndPhone `json:"payer,omitempty"`
-		CreateTime    string                 `json:"create_time,omitempty"`
-		UpdateTime    string                 `json:"update_time,omitempty"`
+		CreateTime    *time.Time             `json:"create_time,omitempty"`
+		UpdateTime    *time.Time             `json:"update_time,omitempty"`
 		Links         []Link                 `json:"links"`
 		Status        string                 `json:"status,omitempty"`
 	}
