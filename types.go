@@ -222,6 +222,11 @@ type (
 		DisputeCategories []string `json:"dispute_categories,omitempty"`
 	}
 
+	SellerReceiveableBreakdown struct {
+		GrossAmount *Money `json:"gross_amount,omitempty"`
+		PaypalFee   *Money `json:"paypal_fee,omitempty"`
+		NetAmount   *Money `json:"net_amount,omitempty"`
+	}
 	// https://developer.paypal.com/docs/api/payments/v2/#definition-capture_status_details
 	CaptureStatusDetails struct {
 		Reason string `json:"reason,omitempty"`
@@ -543,9 +548,15 @@ type (
 
 	// CaptureAmount struct
 	CaptureAmount struct {
-		ID       string              `json:"id,omitempty"`
-		CustomID string              `json:"custom_id,omitempty"`
-		Amount   *PurchaseUnitAmount `json:"amount,omitempty"`
+		ID                         string                      `json:"id,omitempty"`
+		Status                     string                      `json:"status,omitempty"`
+		Amount                     *PurchaseUnitAmount         `json:"amount,omitempty"`
+		FinalCapture               bool                        `json:"final_capture,omitempty"`
+		SellerProtection           *SellerProtection           `json:"seller_protection,omitempty"`
+		SellerReceiveableBreakdown *SellerReceiveableBreakdown `json:"SellerReceiveableBreakdown,omitempty"`
+		Links                      []Link                      `json:"links,omitempty"`
+		CreateTime                 *time.Time                  `json:"create_time,omitempty"`
+		UpdateTime                 *time.Time                  `json:"update_time,omitempty"`
 	}
 
 	// CapturedPayments has the amounts for a captured order
@@ -563,8 +574,12 @@ type (
 
 	// CapturedPurchaseUnit are purchase units for a captured order
 	CapturedPurchaseUnit struct {
-		Items    []CapturedPurchaseItem `json:"items,omitempty"`
-		Payments *CapturedPayments      `json:"payments,omitempty"`
+		ReferenceID string              `json:reference_id,omitempty"`
+		Amount      *PurchaseUnitAmount `json:"amount,omitempty"`
+		Payee       *Payee              `json:"payee,omitempty"`
+		Description string              `json:"description,omitempty"`
+		Items       []Item              `json:"items,omitempty"`
+		Payments    *CapturedPayments   `json:"payments,omitempty"`
 	}
 
 	// PayerWithNameAndPhone struct
@@ -578,9 +593,13 @@ type (
 	// CaptureOrderResponse is the response for capture order
 	CaptureOrderResponse struct {
 		ID            string                 `json:"id,omitempty"`
-		Status        string                 `json:"status,omitempty"`
-		Payer         *PayerWithNameAndPhone `json:"payer,omitempty"`
+		Intent        string                 `json:"intent,omitempty"`
 		PurchaseUnits []CapturedPurchaseUnit `json:"purchase_units,omitempty"`
+		Payer         *PayerWithNameAndPhone `json:"payer,omitempty"`
+		CreateTime    string                 `json:"create_time,omitempty"`
+		UpdateTime    string                 `json:"update_time,omitempty"`
+		Links         []Link                 `json:"links"`
+		Status        string                 `json:"status,omitempty"`
 	}
 
 	// Payer struct
@@ -833,7 +852,8 @@ type (
 
 	//Payee struct
 	Payee struct {
-		Email string `json:"email"`
+		Email      string `json:"email_address"`
+		MerchantID string `json:"merchant_id"`
 	}
 
 	// PayeeForOrders struct
