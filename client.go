@@ -76,6 +76,10 @@ func (c *Client) SetReturnRepresentation() {
 	c.returnRepresentation = true
 }
 
+type MockHeader struct {
+	CodeMap string `json:"mock_application_codes"`
+}
+
 // Send makes a request to the API, the response body will be
 // unmarshaled into v, or if v is an io.Writer, the response will
 // be written to it without decoding
@@ -93,6 +97,11 @@ func (c *Client) Send(req *http.Request, v interface{}) error {
 	// Default values for headers
 	if req.Header.Get("Content-type") == "" {
 		req.Header.Set("Content-type", "application/json")
+	}
+	if len(c.mockResponse) > 0 {
+		mock := MockHeader{ CodeMap: c.mockResponse }
+		b, _ := json.Marshal(&mock)
+		req.Header.Set("PayPal-Mock-Response", string(b))
 	}
 	if c.returnRepresentation {
 		req.Header.Set("Prefer", "return=representation")

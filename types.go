@@ -309,6 +309,7 @@ type (
 		Token                *TokenResponse
 		tokenExpiresAt       time.Time
 		returnRepresentation bool
+		mockResponse         string
 	}
 
 	// CreditCard struct
