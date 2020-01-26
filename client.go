@@ -98,15 +98,14 @@ func (c *Client) Send(req *http.Request, v interface{}) error {
 	if req.Header.Get("Content-type") == "" {
 		req.Header.Set("Content-type", "application/json")
 	}
-	if len(c.mockResponse) > 0 {
-		mock := MockHeader{ CodeMap: c.mockResponse }
+	if len(c.MockResponse) > 0 {
+		mock := MockHeader{CodeMap: c.MockResponse}
 		b, _ := json.Marshal(&mock)
 		req.Header.Set("PayPal-Mock-Response", string(b))
 	}
 	if c.returnRepresentation {
 		req.Header.Set("Prefer", "return=representation")
 	}
-
 	resp, err = c.Client.Do(req)
 	c.log(req, resp)
 
