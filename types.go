@@ -307,9 +307,9 @@ type (
 		APIBase              string
 		Log                  io.Writer // If user set log file name all requests will be logged there
 		Token                *TokenResponse
+		MockResponse         string
 		tokenExpiresAt       time.Time
 		returnRepresentation bool
-		mockResponse         string
 	}
 
 	// CreditCard struct
