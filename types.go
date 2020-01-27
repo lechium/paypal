@@ -378,9 +378,9 @@ type (
 
 	// ErrorResponseDetail struct
 	ErrorResponseDetail struct {
-		Field string `json:"field"`
-		Issue string `json:"issue"`
-		Links []Link `json:"link"`
+		Field string `json:"field,omitempty"`
+		Issue string `json:"issue,omitempty"`
+		Links []Link `json:"link,omitempty"`
 	}
 
 	// ErrorResponse https://developer.paypal.com/docs/api/errors/
@@ -389,7 +389,8 @@ type (
 		Name            string                `json:"name"`
 		DebugID         string                `json:"debug_id"`
 		Message         string                `json:"message"`
-		InformationLink string                `json:"information_link"`
+		InformationLink string                `json:"information_link,omitempty"`
+		Links           []Link                `json:"links,omitempty"`
 		Details         []ErrorResponseDetail `json:"details"`
 	}
 
